@@ -9,7 +9,8 @@ class Gui:
         self.__greetingLabel = Label(font=('Times', 24))
         self.__greetingLabel.place(x=10,y=10)
         self.__root.wm_attributes("-topmost", True)
-        self.__root.wm_attributes("-fullscreen", True)
+        self.__root.geometry("500x500")
+        # self.__root.wm_attributes("-fullscreen", True)
 
     def greeting(self, name:str):
         self.__greetingLabel.config(text=name)
@@ -43,24 +44,26 @@ class SmartMirror:
         self.__ui.start()
 
     def handle(self):
-        self.__greeting.action(self.__ui,0)
+        message = self.__greeting.message
+        self.action(message, 0)
         # self.__ui.stop();
 
-
+    def action(self, message, messageposition):
+        self.__ui.greeting(message[0:messageposition])
+        if(messageposition - 1 != len(message)):
+            self.__ui.after(350, self.action, messageposition+1)
 
 class GenericGreeting:
 
-    def action(self, gui, messageposition):
-        message = "Hi, Sam!"
-        gui.greeting(message[0:messageposition])
-        if(messageposition - 1 != len(message)):
-            gui.after(500, self.action, gui, messageposition+1)
-
+     @property
+     def message(self):
+         return "Hi, Sam!"
 
 class MorningGreeting:
+     @property
+     def message(self):
+         return "Good morning, Sam"
 
-    def action(self, setLabel):
-        setLabel("Good morning, Sam")
         
 
     
