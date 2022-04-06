@@ -9,10 +9,11 @@ class Gui:
 
     def __init__(self):
         self.__root = Tk()
-        self.__greetingLabel = Label(font=('Times', 24),anchor="w", justify="left")
+        self.__greetingLabel = Label(font=('Times', 24), bg="black", fg="white", anchor="w", justify="left")
         self.__greetingLabel.place(x=10,y=10)
         self.__root.wm_attributes("-topmost", True)
         self.__root.geometry("500x500")
+        self.__root.configure(bg="black")
         # self.__root.wm_attributes("-fullscreen", True)
 
     def greeting(self, name:str):
