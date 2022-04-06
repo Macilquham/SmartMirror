@@ -9,7 +9,7 @@ class Gui:
 
     def __init__(self):
         self.__root = Tk()
-        self.__greetingLabel = Label(font=('Times', 24))
+        self.__greetingLabel = Label(font=('Times', 24),anchor="w", justify="left")
         self.__greetingLabel.place(x=10,y=10)
         self.__root.wm_attributes("-topmost", True)
         self.__root.geometry("500x500")
@@ -42,13 +42,13 @@ class SmartMirror:
         school_start = time(9,0)
 
         # if school_start < current_time < school_finish:
-        self.__greeting  = MorningGreeting()
-        # self.__greeting = random.choice(self.__randomGreetings)()
+        #self.__greeting  = GenericGreeting()
+        self.__greeting = random.choice(self.__randomGreetings)()
         self.__ui.after(0,self.handle)
         self.__ui.start()
 
     def handle(self):
-        message = self.__greeting.message
+        message = random.choice(self.__greeting.message)
         self.action(message, 0, 0)
         
 
@@ -66,12 +66,12 @@ class GenericGreeting:
 
      @property
      def message(self):
-         return ["Hi, Sam!"]
+         return [["Hi, Sam!"]]
 
 class MorningGreeting:
      @property
      def message(self):
-         return ["Good morning, Sam", "Have you done your morning chores?","Eaten breakfast?,\nBrushed teeth?\nGone toilet?"]
+         return [["Morena, Sam","Did you have a good sleep?"],["Good morning, Sam", "Have you done your morning chores?","Eaten breakfast?\nBrushed your teeth?\nGone toilet?"]]
 
 class MathQuiz:
      @property
@@ -79,7 +79,7 @@ class MathQuiz:
          first_number = random.randrange(0,5)
          second_number = random.randrange(0,5)
          total = first_number + second_number
-         return ["Ready for a math quiz, Sam?","What is {0} + {1}?".format(first_number, second_number), "{0} + {1} = {2}".format(first_number, second_number,total)]
+         return [["Ready for a math quiz, Sam?","What is {0} + {1}?".format(first_number, second_number), "{0} + {1} = {2}".format(first_number, second_number,total)]]
 
 class CapitalCities:
      @property
@@ -89,9 +89,9 @@ class CapitalCities:
         response = requests.get(api_url, headers={'X-Api-Key': 'rInxjc8lmjG+C0NLpIQAfg==PbQmi3w6GeiKloEU'})
         if response.status_code == requests.codes.ok:
             text = json.loads(response.text)
-            return["The capital of {0} is {1}".format(country,text[0]["capital"])]
+            return[["The capital of {0} is {1}".format(country,text[0]["capital"])]]
         else:
-            return ["The capital of New Zealand is Wellington"]
+            return [["The capital of New Zealand is Wellington"]]
 
        
 
