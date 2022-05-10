@@ -14,8 +14,9 @@ camera = PiCamera()
 camera.resolution = (640, 480)
 camera.framerate = 64
 rawCapture = PiRGBArray(camera, size=(640, 480))
+backgroundImage = cv2.imread("black-background.png",cv2.IMREAD_UNCHANGED)
 print("Ready")
-
+cv2.imshow("Frame",backgroundImage)
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     img = frame.array
     Current_image = cv2.resize(img,(0,0),None,0.25,0.25)
@@ -25,12 +26,17 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     face_encodes = face_recognition.face_encodings(Current_image,face_locations)
 
     for encodeFace,faceLocation in zip(face_encodes,face_locations):
+        
         matches = face_recognition.compare_faces(encodedFaces,encodeFace, tolerance=0.6)
+        print("detected")
+        # if any(matches):
+        #     index = [index for index, item in enumerate(matches) if item][0]
+        smartMirror = SmartMirror()
+        smartMirror.execute(True)
+        # else:
+        #     smartMirror = SmartMirror()
+        #     smartMirror.execute(False)
 
-        if any(matches):
-            index = [index for index, item in enumerate(matches) if item][0]
-            smartMirror = SmartMirror()
-            smartMirror.execute()
-
+    
     key = cv2.waitKey(1)        
     rawCapture.truncate(0)

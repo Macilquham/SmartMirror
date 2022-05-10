@@ -10,7 +10,7 @@ import numpy as np
 
 class FacialRecognitionDataCapture:
     
-    def CaptureTrainingImages():
+    def CaptureTrainingImages(self):
         camera = PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 64
@@ -58,3 +58,7 @@ class FacialRecognitionDataCapture:
 
         
         return encodeList
+
+
+if __name__ == "__main__":
+    FacialRecognitionDataCapture().CaptureTrainingImages()
