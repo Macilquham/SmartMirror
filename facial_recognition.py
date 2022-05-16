@@ -28,14 +28,14 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     for encodeFace,faceLocation in zip(face_encodes,face_locations):
         
         matches = face_recognition.compare_faces(encodedFaces,encodeFace, tolerance=0.6)
-        print("detected")
-        # if any(matches):
-        #     index = [index for index, item in enumerate(matches) if item][0]
-        smartMirror = SmartMirror()
-        smartMirror.execute(True)
-        # else:
-        #     smartMirror = SmartMirror()
-        #     smartMirror.execute(False)
+        
+        if any(matches):
+            index = [index for index, item in enumerate(matches) if item][0]
+            smartMirror = SmartMirror()
+            smartMirror.execute(True)
+        else:
+            smartMirror = SmartMirror()
+            smartMirror.execute(False)
 
     
     key = cv2.waitKey(1)        

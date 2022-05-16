@@ -15,7 +15,7 @@ class Gui:
     def __init__(self):
         self.__root = Tk()
         self.__greetingLabel = Label(font=('Times', 36, 'bold'), bg="black", fg="white", anchor="w", justify="left")
-        self.__greetingLabel.place(x=650,y=250)
+        self.__greetingLabel.place(x=675,y=250)
         self.__root.wm_attributes("-topmost", True)
         self.__root.geometry("500x500")
         self.__root.configure(bg="black")
@@ -42,8 +42,8 @@ class Gui:
 class SmartMirror:
     def __init__(self):
         self.__ui = Gui()
-        self.__randomGreetings = [Dog]
-        #self.__randomGreetings = [CapitalCities,MathQuiz,CurrentTime, Dog]
+        # self.__randomGreetings = [CurrentTime]
+        self.__randomGreetings = [CapitalCities,MathQuiz,CurrentTime, Dog, Positivity, SamFacts]
 
 
 
@@ -81,7 +81,7 @@ class SmartMirror:
     def dog_action(self, message, image):
 
             self.__ui.greeting_config(text=message,image=image,compound='bottom')
-            self.__ui.after(4500, self.__ui.stop)
+            self.__ui.after(7500, self.__ui.stop)
 
     def handle(self):
         message = random.choice(self.__greeting.message)
@@ -102,6 +102,16 @@ class AccessDenied:
      def message(self):
          return [["You are not Sam!","ACCESS DENIED"]]
 
+class Positivity:
+     @property
+     def message(self):
+         return [["Hello, Sam","Sam you are amazing"],["Hello, Sam","Sam, Mum and Dad are so proud of you"],["Hello, Sam","I am a fantastic reader"],["Hello, Sam","Everybody loves hugs from Sam"]]
+
+class SamFacts:
+     @property
+     def message(self):
+         return [["Hello, Sam","I am 11"],["Hello, Sam","My birthday is the 17th of May"],["Hello, Sam","I have one sister named Isabella"],["Hello, Sam","I have a dog called Cedric"]]
+
 class MorningGreeting:
      @property
      def message(self):
@@ -118,7 +128,7 @@ class MathQuiz:
          first_number = random.randrange(0,5)
          second_number = random.randrange(0,5)
          total = first_number + second_number
-         return [["Ready for a maths quiz, Sam?","What does {0} + {1} equal?".format(first_number, second_number), "{0} + {1} = {2}".format(first_number, second_number,total)]]
+         return [["Hello, Sam","Ready for a maths quiz, Sam?","What does {0} + {1} equal?".format(first_number, second_number), "{0} + {1} = {2}".format(first_number, second_number,total)]]
 
 class CapitalCities:
      @property
@@ -128,7 +138,7 @@ class CapitalCities:
         response = requests.get(api_url, headers={'X-Api-Key': 'rInxjc8lmjG+C0NLpIQAfg==PbQmi3w6GeiKloEU'})
         if response.status_code == requests.codes.ok:
             text = json.loads(response.text)
-            return[["The capital of {0} is {1}".format(country,text[0]["capital"])]]
+            return[["Hello, Sam","The capital of {0} is {1}".format(country,text[0]["capital"])]]
         else:
             return [["The capital of New Zealand is Wellington"]]
 
@@ -136,8 +146,8 @@ class CurrentTime:
      @property
      def message(self):
          now = datetime.now()
-         current_time = now.strftime("%H:%M:%S")
-         return[["The time is {0}".format(current_time)]]
+         current_time = now.strftime("%H:%M")
+         return[["Hello, Sam","The time is {0}".format(current_time)]]
 
 class Dog:
      @property

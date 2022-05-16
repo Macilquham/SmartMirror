@@ -14,6 +14,8 @@ class FacialRecognitionDataCapture:
         camera = PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 64
+        # camera.brightness = 60
+        # camera.exposure_mode = 'night'
         rawCapture = PiRGBArray(camera, size=(640, 480))
 
         count = 0
@@ -21,6 +23,8 @@ class FacialRecognitionDataCapture:
             image = frame.array
             cv2.imshow("Frame", image)
             key = cv2.waitKey(1) 
+            if key == ord('b'):
+                camera.brightness = camera.brightness + 1
             if key == ord('c'):
                 cv2.imwrite(f'./Faces/face{count}.jpg',image)
                 count = count + 1
